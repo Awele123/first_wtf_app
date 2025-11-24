@@ -79,7 +79,7 @@ class _EditprofileState extends State<Editprofile> {
                     child: Icon(Icons.arrow_back),
                   ),
                   Text(
-                    "Profile",
+                    "Edit Profile",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
                   Icon(Icons.share),
