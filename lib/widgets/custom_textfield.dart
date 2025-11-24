@@ -5,9 +5,11 @@ class CustomTextField extends StatelessWidget {
   const CustomTextField({
     super.key,
     required this.label,
-    this.textEditingController,
+    this.textEditingController,  this.hintText,
   });
+  
   final String label;
+  final String? hintText;
   final TextEditingController? textEditingController;
 
   @override
@@ -19,6 +21,7 @@ class CustomTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
         ),
         labelText: label,
+        hintText: hintText
       ),
     );
   }

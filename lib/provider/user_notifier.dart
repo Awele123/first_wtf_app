@@ -39,7 +39,7 @@ class UserNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> signUp({
+  Future<bool> signUp({
     required BuildContext context,
     required String userName,
     required String password,
@@ -68,14 +68,17 @@ class UserNotifier extends ChangeNotifier {
 
       // take user to home page
       Navigator.of(context).pushReplacementNamed("/home");
+      return true;
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(e.message ?? "error occured")));
+      return false;
     } catch (e) {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(e.toString())));
+      return false;
     }
   }
 
