@@ -28,28 +28,12 @@ class _EditprofileState extends State<Editprofile> {
     if (user != null) {
       nameController.text = user.name;
       emailController.text = user.email;
-      passwordController.text = "";
+      
     }
   }
 
-  void loadUser() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    nameController.text = prefs.getString('name') ?? '';
-    emailController.text = prefs.getString('email') ?? '';
-    passwordController.text = prefs.getString('password') ?? '';
-  }
-
-  Future<void> updateUser() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('name', nameController.text);
-    await prefs.setString('email', emailController.text);
-    await prefs.setString('password', passwordController.text);
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Profile updated successfully!")),
-    );
-  }
+ 
+  
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +44,7 @@ class _EditprofileState extends State<Editprofile> {
         child: CustomButton(
           text: "Update",
           textStyle: TextStyle(fontSize: 60.0),
-          onPressed: updateUser,
+         onPressed: (){},
         ),
       ),
       body: Column(
@@ -129,7 +113,7 @@ class _EditprofileState extends State<Editprofile> {
               ),
             ],
           ),
-          SizedBox(height: 60.0),
+          SizedBox(height: 80.0),
 
           Padding(
             padding: const EdgeInsets.symmetric(
@@ -149,6 +133,7 @@ class _EditprofileState extends State<Editprofile> {
 
                   textEditingController: emailController,
                 ),
+           
               ],
             ),
           ),
