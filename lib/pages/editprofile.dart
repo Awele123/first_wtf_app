@@ -1,4 +1,6 @@
+import 'package:first_wtf_app/bottom_navigation.dart';
 import 'package:first_wtf_app/model/user_detail.dart';
+import 'package:first_wtf_app/pages/home_page.dart';
 import 'package:first_wtf_app/pages/profile_page.dart';
 import 'package:first_wtf_app/provider/user_notifier.dart';
 import 'package:first_wtf_app/widgets/custom_button.dart';
@@ -28,12 +30,8 @@ class _EditprofileState extends State<Editprofile> {
     if (user != null) {
       nameController.text = user.name;
       emailController.text = user.email;
-      
     }
   }
-
- 
-  
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +42,16 @@ class _EditprofileState extends State<Editprofile> {
         child: CustomButton(
           text: "Update",
           textStyle: TextStyle(fontSize: 60.0),
-         onPressed: (){},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return BottomNavigation();
+                },
+              ),
+            );
+          },
         ),
       ),
       body: Column(
@@ -95,9 +102,9 @@ class _EditprofileState extends State<Editprofile> {
                     children: [
                       CircleAvatar(
                         radius: 50,
-                       
-                       backgroundColor: Colors.white,
-                       backgroundImage: AssetImage("assets/person.png"),
+
+                        backgroundColor: Colors.white,
+                        backgroundImage: AssetImage("assets/person.png"),
                       ),
                       CircleAvatar(
                         radius: 16,
@@ -133,7 +140,6 @@ class _EditprofileState extends State<Editprofile> {
 
                   textEditingController: emailController,
                 ),
-           
               ],
             ),
           ),
