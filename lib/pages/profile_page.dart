@@ -1,4 +1,5 @@
 import 'package:first_wtf_app/model/user_detail.dart';
+import 'package:first_wtf_app/pages/editprofile.dart';
 import 'package:first_wtf_app/pages/notifications_page.dart';
 import 'package:first_wtf_app/provider/user_notifier.dart';
 import 'package:flutter/material.dart';
@@ -87,6 +88,14 @@ class _ProfilePageState extends State<ProfilePage> {
         ListTile(
           title: Text("Personal Information", style: TextStyle(fontSize: 16)),
           trailing: Icon(Icons.arrow_forward_ios_outlined, size: 16),
+          onTap: (){
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context){
+                return Editprofile();
+              })
+            );
+            
+          },
         ),
         Divider(),
         ListTile(
