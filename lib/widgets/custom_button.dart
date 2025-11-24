@@ -5,9 +5,10 @@ class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key, 
     required this.text,
-    this.onPressed
+    this.onPressed, this.textStyle
   });
   final String text;
+  final TextStyle? textStyle;
   final Function()? onPressed;
 
   @override
@@ -22,7 +23,7 @@ class CustomButton extends StatelessWidget {
         foregroundColor: Colors.white,
       ),
       onPressed: onPressed,
-      child: Text(text),
+      child: Text(text, style: TextStyle(),),
     );
   }
 }

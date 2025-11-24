@@ -22,13 +22,7 @@ class _SignupPageState extends State<SignupPage> {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   var confirmPasswordController = TextEditingController();
-  Future<void> saveUser(UserDetail user) async {
-  final prefs = await SharedPreferences.getInstance();
-  await prefs.setString('name', user.name);
-  await prefs.setString('email', user.email);
- 
- 
-}
+
   @override
   Widget build(BuildContext context) {
     var userProv = Provider.of<UserNotifier>(context);
@@ -74,7 +68,7 @@ class _SignupPageState extends State<SignupPage> {
        final prefs = await SharedPreferences.getInstance();
       await prefs.setString('name', nameController.text);
       await prefs.setString('email', emailController.text);
-
+await prefs.setString('password', passwordController.text);
                 }    
               }
             ),

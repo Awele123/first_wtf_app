@@ -1,8 +1,10 @@
 import 'package:first_wtf_app/model/user_detail.dart';
 import 'package:first_wtf_app/pages/profile_page.dart';
+import 'package:first_wtf_app/provider/user_notifier.dart';
 import 'package:first_wtf_app/widgets/custom_button.dart';
 import 'package:first_wtf_app/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Editprofile extends StatefulWidget {
@@ -16,28 +18,33 @@ class _EditprofileState extends State<Editprofile> {
   var nameController = TextEditingController();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
-  var confirmPasswordController = TextEditingController();
-  String? savedName;
-  String? savedEmail;
+
   @override
   void initState() {
     super.initState();
-    loadUser();
+
+    final user = Provider.of<UserNotifier>(context, listen: false).loggedInUser;
+
+    if (user != null) {
+      nameController.text = user.name;
+      emailController.text = user.email;
+      passwordController.text = "";
+    }
   }
 
-  Future<void> loadUser() async {
+  void loadUser() async {
     final prefs = await SharedPreferences.getInstance();
 
     nameController.text = prefs.getString('name') ?? '';
     emailController.text = prefs.getString('email') ?? '';
-
-    setState(() {});
+    passwordController.text = prefs.getString('password') ?? '';
   }
 
   Future<void> updateUser() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('name', nameController.text);
     await prefs.setString('email', emailController.text);
+    await prefs.setString('password', passwordController.text);
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text("Profile updated successfully!")),
@@ -47,64 +54,100 @@ class _EditprofileState extends State<Editprofile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 40.0),
         child: CustomButton(
-          text: "Upadate",
-          onPressed: 
-           updateUser,
-        
+          text: "Update",
+          textStyle: TextStyle(fontSize: 60.0),
+          onPressed: updateUser,
         ),
       ),
       body: Column(
         children: [
-          Container(
-            padding: EdgeInsets.all(20),
-            decoration: BoxDecoration(color: Colors.blueAccent),
-            child: Padding(
-              padding: const EdgeInsets.only(top: 35.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return ProfilePage();
-                          },
+          Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(color: Colors.blue),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 35.0, bottom: 40.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return ProfilePage();
+                              },
+                            ),
+                          );
+                        },
+                        child: Icon(Icons.arrow_back, color: Colors.white),
+                      ),
+                      Text(
+                        "Edit Profile",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
                         ),
-                      );
-                    },
-                    child: Icon(Icons.arrow_back),
+                      ),
+                      Icon(Icons.share, color: Colors.white),
+                    ],
                   ),
-                  Text(
-                    "Edit Profile",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-                  ),
-                  Icon(Icons.share),
-                ],
+                ),
               ),
-            ),
+              Positioned(
+                bottom: -60,
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: Stack(
+                    alignment: Alignment.bottomRight,
+                    children: [
+                      CircleAvatar(
+                        radius: 50,
+                       
+                       backgroundColor: Colors.white,
+                       backgroundImage: AssetImage("assets/person.png"),
+                      ),
+                      CircleAvatar(
+                        radius: 16,
+                        child: Icon(
+                          Icons.camera_alt,
+                          size: 18,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: 50.0),
+          SizedBox(height: 60.0),
+
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 20.0,
+            ),
             child: Column(
               spacing: 24.0,
               children: [
                 CustomTextField(
-                  hintText: savedName,
-                  label: "Username",
+                  label: "",
                   textEditingController: nameController,
                 ),
                 CustomTextField(
-                  label: "Email",
+                  label: "",
+                  readOnly: true,
+
                   textEditingController: emailController,
-                ),
-                CustomTextField(
-                  label: "password",
-                  textEditingController: passwordController,
                 ),
               ],
             ),
