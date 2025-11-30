@@ -61,7 +61,7 @@ class _EditprofileState extends State<Editprofile> {
             children: [
               Container(
                 padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(color: Colors.blue),
+                decoration: BoxDecoration(color: Colors.blue,),
                 child: Padding(
                   padding: const EdgeInsets.only(top: 35.0, bottom: 40.0),
                   child: Row(
